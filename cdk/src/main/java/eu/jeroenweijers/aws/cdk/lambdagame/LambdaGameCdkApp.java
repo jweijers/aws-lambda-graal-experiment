@@ -6,7 +6,7 @@ public class LambdaGameCdkApp {
     public static void main(final String[] args) {
         App app = new App();
 
-        new LambdaGameCdkStack(app, "CdkStack");
+        new LambdaGameCdkStack(app, "JW-LambdaGames");
 
         app.synth();
     }

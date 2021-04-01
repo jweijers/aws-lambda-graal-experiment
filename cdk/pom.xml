@@ -17,6 +17,18 @@
             <groupId>software.amazon.awscdk</groupId>
             <artifactId>core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>apigateway</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>lambda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>s3</artifactId>
+        </dependency>
 
         <dependency>
           <groupId>org.junit.jupiter</groupId>

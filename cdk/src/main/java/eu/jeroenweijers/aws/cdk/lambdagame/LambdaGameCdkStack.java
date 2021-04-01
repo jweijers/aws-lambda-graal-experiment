@@ -12,6 +12,6 @@ public class LambdaGameCdkStack extends Stack {
     public LambdaGameCdkStack(final Construct scope, final String id, final StackProps props) {
         super(scope, id, props);
 
-        // The code that defines your stack goes here
+        new HelloWorldService(this, "HelloWorld");
     }
 }

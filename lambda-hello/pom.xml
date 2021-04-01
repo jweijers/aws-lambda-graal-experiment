@@ -56,6 +56,7 @@
                 <version>3.2.2</version>
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <finalName>hello-world-lambda</finalName>
                 </configuration>
                 <executions>
                     <execution>
