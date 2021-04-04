@@ -1,5 +1,7 @@
 package eu.jeroenweijers.aws.cdk.lambdagame;
 
+import eu.jeroenweijers.aws.cdk.lambdagame.construct.invocationcounter.InvocationCounter;
+import eu.jeroenweijers.aws.cdk.lambdagame.construct.invocationcounter.InvocationCounterProps;
 import org.jetbrains.annotations.NotNull;
 import software.amazon.awscdk.core.Construct;
 import software.amazon.awscdk.services.lambda.AssetCode;
@@ -27,6 +29,10 @@ public class HelloWorldService extends Construct {
                 }}).build();
 
         bucket.grantReadWrite(helloWorldLambda);
+
+        final InvocationCounter counterHello = new InvocationCounter(this, "InvocationCounterHello", InvocationCounterProps.builder()
+                .downstream(helloWorldLambda)
+                .build());
 
     }
 }

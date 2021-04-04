@@ -15,7 +15,6 @@ public class HelloWorld implements RequestHandler<Map<String, String>, String> {
 
     @Override
     public String handleRequest(Map<String, String> event, Context context) {
-
         final LambdaLogger logger = context.getLogger();
         logger.log("Hello from lambda!");
         logger.log("Event: " + gson.toJson(event));
