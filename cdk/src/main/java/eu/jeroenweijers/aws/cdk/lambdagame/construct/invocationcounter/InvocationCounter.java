@@ -2,6 +2,10 @@ package eu.jeroenweijers.aws.cdk.lambdagame.construct.invocationcounter;
 
 import software.amazon.awscdk.core.Construct;
 import software.amazon.awscdk.core.Duration;
+import software.amazon.awscdk.services.dynamodb.Attribute;
+import software.amazon.awscdk.services.dynamodb.AttributeType;
+import software.amazon.awscdk.services.dynamodb.BillingMode;
+import software.amazon.awscdk.services.dynamodb.Table;
 import software.amazon.awscdk.services.lambda.AssetCode;
 import software.amazon.awscdk.services.lambda.Code;
 import software.amazon.awscdk.services.lambda.Function;
@@ -13,11 +17,23 @@ import java.util.Map;
 public class InvocationCounter extends Construct {
 
     private final Function handler;
+
+    private final Table table;
+
     public InvocationCounter(final Construct scope, final String id, final InvocationCounterProps props) {
         super(scope, id);
 
+        this.table = Table.Builder.create(this, "Invocations")
+                .billingMode(BillingMode.PAY_PER_REQUEST)
+                .partitionKey(Attribute.builder()
+                        .name("Function")
+                        .type(AttributeType.STRING)
+                        .build())
+                .build();
+
         final Map<String, String> environment = new HashMap<>();
         environment.put("DownstreamFunction", props.getDownstream().getFunctionName());
+        environment.put("InvocationTable", table.getTableName());
 
         final AssetCode code = Code.fromAsset("../lambda-call-counter/target/call-counter-lambda.jar");
         this.handler = Function.Builder.create(this, "InvocationCounterHandler")
@@ -31,6 +47,7 @@ public class InvocationCounter extends Construct {
                 .build();
 
         props.getDownstream().grantInvoke(handler);
+        table.grantReadWriteData(handler);
     }
 
     public Function getHandler() {
