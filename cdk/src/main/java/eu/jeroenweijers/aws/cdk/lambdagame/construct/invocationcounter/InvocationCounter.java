@@ -35,13 +35,12 @@ public class InvocationCounter extends Construct {
         environment.put("DownstreamFunction", props.getDownstream().getFunctionName());
         environment.put("InvocationTable", table.getTableName());
 
-        final AssetCode code = Code.fromAsset("../lambda-call-counter/target/call-counter-lambda.jar");
+        final AssetCode code = Code.fromAsset("../lambda-call-counter/target/function.zip");
         this.handler = Function.Builder.create(this, "InvocationCounterHandler")
-                .runtime(Runtime.JAVA_11)
-                .handler("eu.jeroenweijers.aws.lambdagame.InvocationCounter::handleRequest")
+                .runtime(Runtime.PROVIDED_AL2)
+                .handler("io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest")
                 //somehow this is very slow and consumes lots of memory...
-                .timeout(Duration.seconds(15))
-                .memorySize(256)
+                .timeout(Duration.seconds(5))
                 .code(code)
                 .environment(environment)
                 .build();

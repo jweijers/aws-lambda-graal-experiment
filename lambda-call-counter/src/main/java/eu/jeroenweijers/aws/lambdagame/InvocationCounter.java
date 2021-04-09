@@ -17,9 +17,11 @@ import software.amazon.awssdk.services.lambda.model.InvokeRequest;
 import software.amazon.awssdk.services.lambda.model.InvokeResponse;
 import software.amazon.awssdk.services.lambda.model.LogType;
 
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
 
+@Named("invocationCounter")
 public class InvocationCounter implements RequestHandler<Map<String, String>, String> {
 
     private static final String INVOCATION_TABLE_VAR = "InvocationTable";
